@@ -12,7 +12,7 @@ cart.add({
   price: 200,
   id: 2,
 })
-const movi2 = new Cart;
+
 cart.add({
   name: 'bobik',
   year: 2020,
