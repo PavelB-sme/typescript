@@ -1,0 +1,55 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const loader = require('mini-css-extract-plugin');
+
+module.exports = {
+    entry: './src/index.js',
+    mode: 'development',
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    },
+    module: {
+        rules: [
+            {
+                test: /\.html$/,
+                use: [
+                        {
+                            loader: 'html-loader',
+                        },
+                    ],
+            },
+            {
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: 'babel-loader',
+            },
+            {
+                test: /\.(ts|tsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'ts-loader'
+                    }
+            }
+        ]
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'index_bundle.js',
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: './index.html'
+        }),
+        new MiniCssExtractPlugin(),
+    ],
+        devServer: {
+            static: path.join(__dirname, 'dist'),
+            hot: true,
+    }
+}
